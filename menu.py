@@ -30,10 +30,10 @@ if __name__ == '__main__':
         if event == Psg.WINDOW_CLOSED:
             main_window.close()
             break
-        if event == "-CONNECT-":
+        if event == "-OPEN_CON-":
             main_window.close()
             run_managing(str(get_ip()))
-        if event == "-OPEN_CON-":
+        if event == "-CONNECT-":
             main_window.close()
             in_ip = str(values['-IP_CONNECT-'])
             myclient = VNCClient(in_ip, 5454)

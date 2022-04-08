@@ -112,6 +112,8 @@ class VNCServer(QtWidgets.QMainWindow):
         elif event.type() == QtCore.QEvent.KeyPress:
             if event.key() == QtCore.Qt.Key.Key_Backspace:
                 self.thread_handler.command = f'backspace'
+            elif event.key() == QtCore.Qt.Key.Key_CapsLock:
+                self.thread_handler.command = f'capslock'
             else:
                 self.thread_handler.command = f'key {event.key()}'
 
