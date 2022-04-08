@@ -48,6 +48,11 @@ class VNCClient:
         return 'key_press'
 
     @staticmethod
+    def caps_press():
+        pyautogui.press('capslock')
+        return 'key_press'
+
+    @staticmethod
     def screen_handler():
         data_tmp = pyautogui.screenshot()
         io_bytes = io.BytesIO()
@@ -68,6 +73,8 @@ class VNCClient:
                     result = self.button_key_press(responce[1])
                 elif 'backspace' in responce[0]:
                     result = self.backspace_press()
+                elif 'capslock' in responce[0]:
+                    result = self.caps_press()
                 self.send_json(result)
             except:
                 continue
