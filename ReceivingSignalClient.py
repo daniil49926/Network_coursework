@@ -37,22 +37,40 @@ class VNCClient:
             pyautogui.doubleClick(int(x), int(y))
             return "mouse_double_left_click"
 
-    def screen_handler(self):
+    @staticmethod
+    def button_key_press(key):
+        pyautogui.press(chr(int(key)))
+        return 'key_press'
+
+    @staticmethod
+    def backspace_press():
+        pyautogui.press('backspace')
+        return 'key_press'
+
+    @staticmethod
+    def screen_handler():
         data_tmp = pyautogui.screenshot()
         io_bytes = io.BytesIO()
         data_tmp.save(io_bytes, format=data_tmp.format)
         data_bytes = io_bytes.getvalue()
-        reader = base64.b64decode(data_bytes)
+        reader = base64.b64encode(data_bytes)
         return reader
 
     def execute_handler(self):
         while True:
-            responce = self.receive_json()
-            if responce[0] == 'screen':
-                result = self.screen_handler()
-            elif 'mouse' in responce[0]:
-                result = self.mouse_active(responce[0], responce[1], responce[2])
-            self.send_json(result)
+            try:
+                responce = self.receive_json()
+                if responce[0] == 'screen':
+                    result = self.screen_handler()
+                elif 'mouse' in responce[0]:
+                    result = self.mouse_active(responce[0], responce[1], responce[2])
+                elif 'key' in responce[0]:
+                    result = self.button_key_press(responce[1])
+                elif 'backspace' in responce[0]:
+                    result = self.backspace_press()
+                self.send_json(result)
+            except:
+                continue
 
     def send_json(self, data):
         try:
