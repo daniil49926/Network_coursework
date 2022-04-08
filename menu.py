@@ -4,12 +4,18 @@ import PySimpleGUI as Psg
 import socket
 
 
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
+
+
 if __name__ == '__main__':
     Psg.theme("DarkGrey1")
     main_layout = [
         [
             Psg.Input(size=40, key='-IP_CONNECT-'),
-            Psg.Text(f"Ваш ip-адрес:  {socket.gethostbyname(socket.gethostname())}", size=(40, 1))
+            Psg.Text(f"Ваш ip-адрес:  {get_ip()}", size=(40, 1))
         ],
         [
             Psg.Button('Подключиться', size=(15, 1), key='-CONNECT-'),
@@ -26,10 +32,10 @@ if __name__ == '__main__':
             break
         if event == "-CONNECT-":
             main_window.close()
-            in_ip = str(values['-IP_CONNECT-'])
-            run_managing(in_ip)
+            run_managing(str(get_ip()))
         if event == "-OPEN_CON-":
             main_window.close()
-            myclient = VNCClient(str(socket.gethostbyname(socket.gethostname())), 5454)
+            in_ip = str(values['-IP_CONNECT-'])
+            myclient = VNCClient(in_ip, 5454)
             myclient.execute_handler()
 
