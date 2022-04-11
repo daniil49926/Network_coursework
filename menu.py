@@ -11,11 +11,18 @@ def get_ip():
 
 
 if __name__ == '__main__':
-    Psg.theme("DarkGrey1")
+    Psg.theme("Reddit")
     main_layout = [
         [
+            Psg.Text(size=1)
+        ],
+        [
             Psg.Input(size=40, key='-IP_CONNECT-'),
-            Psg.Text(f"Ваш ip-адрес:  {get_ip()}", size=(40, 1))
+            Psg.Text(size=(25, 1)),
+            Psg.Text(f"Ваш ip-адрес:  {get_ip()}", size=(25, 1))
+        ],
+        [
+            Psg.Text(size=1)
         ],
         [
             Psg.Button('Подключиться', size=(15, 1), key='-CONNECT-'),
@@ -23,7 +30,7 @@ if __name__ == '__main__':
             Psg.Button('Открыть соединение', size=(15, 1), key='-OPEN_CON-')
         ]
     ]
-    main_window = Psg.Window("Ru Viewer", main_layout, button_color="#000")
+    main_window = Psg.Window("Ru Viewer", main_layout)
 
     while True:
         event, values = main_window.read()
